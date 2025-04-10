@@ -4,10 +4,10 @@ const multer = require('multer');
 const path = require('path');
 const Product = require('../models/Product');
 
-// Multer config for file upload
+// ✅ Multer config for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Ensure this folder exists
+    cb(null, 'uploads/'); // Make sure this folder exists
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + path.extname(file.originalname);
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// GET all products
+// ✅ GET all products
 router.get('/', async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST new product
+// ✅ POST new product with image
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
@@ -35,24 +35,28 @@ router.post('/', upload.single('image'), async (req, res) => {
 
     const { name, category, material, price, description } = req.body;
 
+    if (!name || !category || !material || !price || !description) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
     const newProduct = new Product({
       name,
       category,
       material,
       price,
       description,
-      imageUrl: `/uploads/${req.file.filename}` // Relative path for frontend
+      imageUrl: `/uploads/${req.file.filename}` // Used for frontend image rendering
     });
 
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (error) {
     console.error('Error saving product:', error);
-    res.status(400).json({ error: 'Error saving product' });
+    res.status(500).json({ error: 'Error saving product' });
   }
 });
 
-// UPDATE product
+// ✅ UPDATE product
 router.put('/:id', async (req, res) => {
   try {
     const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -62,7 +66,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE product
+// ✅ DELETE product
 router.delete('/:id', async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);

@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 
 const HomePage = () => {
+  const getInitialTheme = () => localStorage.getItem('theme') === 'dark';
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState('All');
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(getInitialTheme);
   const [showLogin, setShowLogin] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const profileRef = useRef(null);
@@ -26,7 +27,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle('dark', darkMode);
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
   useEffect(() => {
@@ -48,7 +49,6 @@ const HomePage = () => {
     <div className={`homepage-container ${darkMode ? 'dark' : ''}`}>
       {showLogin && <LoginPopup onClose={() => setShowLogin(false)} />}
 
-      {/* NAVBAR */}
       <nav className="navbar">
         <h1 className="logo">🛕 Divine Kart</h1>
         <input type="text" placeholder="Search..." className="search-bar" />
@@ -60,8 +60,7 @@ const HomePage = () => {
           <div
             className="profile-container"
             ref={profileRef}
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <FaUserCircle size={28} className="profile-icon" />
             {dropdownOpen && (
@@ -82,9 +81,8 @@ const HomePage = () => {
                 >
                   Profile
                 </Link>
-
                 <div className="theme-toggle">
-                  <span>Dark Theme</span>
+                  <span>{darkMode ? 'Dark Theme' : 'Light Theme'}</span>
                   <label className="switch">
                     <input
                       type="checkbox"
@@ -100,7 +98,6 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* FILTERS */}
       <div className="filters">
         <button onClick={() => setFilter('All')}>All</button>
         <button onClick={() => setFilter('Deity Statues')}>Deity Statues</button>
@@ -109,7 +106,6 @@ const HomePage = () => {
         <button onClick={() => setFilter('Decorative Arches')}>Decorative Arches</button>
       </div>
 
-      {/* PRODUCTS */}
       <h2 className="section-title">Featured Products</h2>
       <div className="catalogue">
         {filteredProducts.length > 0 ? (
