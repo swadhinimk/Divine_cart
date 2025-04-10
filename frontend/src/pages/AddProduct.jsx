@@ -1,27 +1,27 @@
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [material, setMaterial] = useState('');
   const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
 
-  const navigate = useNavigate(); // ✅ Hook at top level
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append('name', name);
+    formData.append('description', description);
     formData.append('category', category);
     formData.append('material', material);
     formData.append('price', price);
-    formData.append('description', description);
-    formData.append('image', image); // should match backend's multer key
+    formData.append('image', image); // Should match backend's multer key
 
     try {
       const res = await axios.post('http://localhost:5000/api/products', formData, {
@@ -30,22 +30,56 @@ const AddProduct = () => {
 
       alert('✅ Product added successfully!');
       console.log('Product added:', res.data);
-
-      navigate('/'); // ✅ Redirect to homepage to view new product
+      navigate('/'); // Redirect to homepage
     } catch (err) {
-      console.error('❌ Upload failed:', err);
+      console.error('❌ Upload failed:', err.response?.data || err.message);
       alert('Failed to add product');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" required onChange={(e) => setName(e.target.value)} />
-      <input type="text" placeholder="Category" required onChange={(e) => setCategory(e.target.value)} />
-      <input type="text" placeholder="Material" required onChange={(e) => setMaterial(e.target.value)} />
-      <input type="number" placeholder="Price" required onChange={(e) => setPrice(e.target.value)} />
-      <textarea placeholder="Description" required onChange={(e) => setDescription(e.target.value)} />
-      <input type="file" required onChange={(e) => setImage(e.target.files[0])} />
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Product Name"
+        required
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Description"
+        required
+      />
+      <input
+        type="text"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        placeholder="Category"
+        required
+      />
+      <input
+        type="text"
+        value={material}
+        onChange={(e) => setMaterial(e.target.value)}
+        placeholder="Material"
+        required
+      />
+      <input
+        type="number"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+        placeholder="Price"
+        required
+      />
+      <input
+        type="file"
+        onChange={(e) => setImage(e.target.files[0])}
+        accept="image/*"
+        required
+      />
+
       <button type="submit">Add Product</button>
     </form>
   );

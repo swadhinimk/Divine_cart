@@ -22,6 +22,7 @@ const LoginPopup = ({ onClose }) => {
   const handleAdminLogin = () => {
     if (username === 'admin' && pass === 'admin') {
       alert('Admin logged in!');
+      localStorage.setItem('isAdmin', true);
       onClose();
       navigate('/admin');
     } else {
@@ -30,20 +31,25 @@ const LoginPopup = ({ onClose }) => {
   };
 
   const handleUserLogin = () => {
-    // Simulate login (you'll later connect to MongoDB)
     if (email && pass) {
-      alert('User logged in (simulation)');
+      const userData = {
+        name: email.split('@')[0], // Just a placeholder for username
+        email,
+        role: 'User',
+      };
+      localStorage.setItem('user', JSON.stringify(userData));
+      alert('User logged in!');
       onClose();
+      navigate('/profile');
     } else {
       alert('Enter valid user credentials');
     }
   };
 
   const handleUserSignup = () => {
-    // Simulate signup
     if (email && pass) {
       alert('User registered (simulation)');
-      setIsSignup(false); // Switch to login mode
+      setIsSignup(false);
     } else {
       alert('Fill in all fields');
     }

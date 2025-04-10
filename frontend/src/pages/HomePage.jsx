@@ -2,17 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import './HomePage.css';
 import axios from 'axios';
 import LoginPopup from '../components/LoginPopup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/cartSlice';
 
 const HomePage = () => {
-  const getInitialTheme = () => localStorage.getItem('theme') === 'dark';
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState('All');
-  const [darkMode, setDarkMode] = useState(getInitialTheme);
   const [showLogin, setShowLogin] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const profileRef = useRef(null);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -25,10 +28,6 @@ const HomePage = () => {
     const timer = setTimeout(() => setShowLogin(true), 20000);
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -45,8 +44,13 @@ const HomePage = () => {
       ? products
       : products.filter((product) => product.category === filter);
 
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    navigate('/cart');
+  };
+
   return (
-    <div className={`homepage-container ${darkMode ? 'dark' : ''}`}>
+    <div className="homepage-container">
       {showLogin && <LoginPopup onClose={() => setShowLogin(false)} />}
 
       <nav className="navbar">
@@ -81,17 +85,6 @@ const HomePage = () => {
                 >
                   Profile
                 </Link>
-                <div className="theme-toggle">
-                  <span>{darkMode ? 'Dark Theme' : 'Light Theme'}</span>
-                  <label className="switch">
-                    <input
-                      type="checkbox"
-                      checked={darkMode}
-                      onChange={() => setDarkMode(!darkMode)}
-                    />
-                    <span className="slider"></span>
-                  </label>
-                </div>
               </div>
             )}
           </div>
@@ -125,7 +118,12 @@ const HomePage = () => {
               <p><strong>Category:</strong> {product.category}</p>
               <p><strong>Material:</strong> {product.material}</p>
               <p><strong>Price:</strong> ₹{product.price}</p>
-              <button className="add-to-cart-btn">Add to Cart</button>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(product)}
+              >
+                Add to Cart
+              </button>
             </div>
           ))
         ) : (

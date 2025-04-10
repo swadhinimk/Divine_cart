@@ -24,9 +24,11 @@ const productSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
-  }
-}, { timestamps: true });
+    required: true, // Path to the image, e.g. "/uploads/image123.jpg"
+  },
+}, {
+  timestamps: true, // adds createdAt and updatedAt fields
+});
 
 // Create and export the model
 const Product = mongoose.model('Product', productSchema);

@@ -21,12 +21,15 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
-      <h2 className="cart-title">🛍️ Your Cart</h2>
+      <h2 className="cart-title">🛒 Your Shopping Cart</h2>
+
+      <div className="back-home-wrapper">
+        <Link to="/" className="back-to-shop">← Back to Home</Link>
+      </div>
 
       {cartItems.length === 0 ? (
         <div className="empty-cart">
           <p>Your cart is empty.</p>
-          <Link to="/" className="back-to-shop">← Go back to shop</Link>
         </div>
       ) : (
         <>
@@ -62,6 +65,7 @@ const Cart = () => {
               </div>
             ))}
           </div>
+
           <div className="cart-summary">
             <h3>Total: ₹{totalPrice.toFixed(2)}</h3>
             <button className="checkout-btn">Proceed to Checkout</button>
