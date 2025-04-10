@@ -1,0 +1,73 @@
+.admin-dashboard-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #fff8e7, #fff0d4);
+  flex-direction: column;
+}
+
+.admin-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-heading {
+  font-size: 26px;
+  font-weight: 600;
+  color: #b4884d;
+  margin-bottom: 20px;
+}
+
+.admin-card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(180, 136, 77, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  padding: 10px;
+  border: 1px solid #deb887;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.admin-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-form button {
+  background-color: #b4884d;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-form button:hover {
+  background-color: #9c6e3c;
+}
+
+.admin-img-preview {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}

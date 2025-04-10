@@ -1,0 +1,51 @@
+.profile-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Make sure both the icon and the dropdown trigger hover state */
+  .profile-container:hover .profile-dropdown,
+  .profile-dropdown:hover {
+    display: block;
+  }
+  
+  .profile-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  
+  .profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background-color: #fffdf7;
+    border: 1px solid #b4884d;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(180, 136, 77, 0.2);
+    padding: 10px;
+    z-index: 1000;
+    min-width: 160px;
+  }
+  
+  .profile-dropdown a,
+  .profile-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  
+  .profile-dropdown a:hover,
+  .profile-dropdown button:hover {
+    background-color: #f7e8d2;
+  }
+  
