@@ -22,6 +22,7 @@ const AdminDashboard = () => {
     price: '',
     description: '',
     image: null,
+    imageUrl: '',
   });
 
   const fetchProducts = async () => {
@@ -97,21 +98,31 @@ const AdminDashboard = () => {
       price: product.price,
       description: product.description,
       image: null,
+      imageUrl: product.imageUrl,
     });
   };
 
   const handleEditChange = (e) => {
     const { name, value, files } = e.target;
-    setEditForm((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+    if (name === 'image') {
+      setEditForm((prev) => ({
+        ...prev,
+        image: files[0],
+      }));
+    } else {
+      setEditForm((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+
     Object.entries(editForm).forEach(([key, value]) => {
+      if (key === 'imageUrl') return;
       if (value) formData.append(key, value);
     });
 
@@ -175,6 +186,7 @@ const AdminDashboard = () => {
                     <div>
                       <h4>{item.name}</h4>
                       <p>Category: {item.category}</p>
+                      <p>Material: {item.material}</p>
                       <p>Price: ₹{item.price}</p>
                     </div>
                     <button onClick={() => handleEditClick(item)}>Edit</button>
@@ -187,9 +199,14 @@ const AdminDashboard = () => {
                         <input type="text" name="material" value={editForm.material} onChange={handleEditChange} required />
                         <input type="number" name="price" value={editForm.price} onChange={handleEditChange} required />
                         <textarea name="description" value={editForm.description} onChange={handleEditChange} required />
+                        {editForm.imageUrl && (
+                          <img src={`http://localhost:5000${editForm.imageUrl}`} alt="Current" className="admin-img-preview" />
+                        )}
                         <input type="file" name="image" onChange={handleEditChange} accept="image/*" />
-                        <button type="submit">Save</button>
-                        <button type="button" onClick={() => setEditingProductId(null)}>Cancel</button>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                          <button type="submit">Save</button>
+                          <button type="button" onClick={() => setEditingProductId(null)}>Cancel</button>
+                        </div>
                       </form>
                     )}
                   </div>

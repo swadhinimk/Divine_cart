@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/spiritual-store', {
+mongoose.connect('mongodb+srv://yeshwanthm22csd:hHNdJpIgSGDBP98O@divinecart.raw3tjl.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
