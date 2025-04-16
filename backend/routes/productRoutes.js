@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const Product = require('../models/Product');
 
-// ✅ Multer config for file uploads
+// Multer config for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/'); // Make sure this folder exists
@@ -23,6 +23,17 @@ router.get('/', async (req, res) => {
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ GET product by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -45,7 +56,7 @@ router.post('/', upload.single('image'), async (req, res) => {
       material,
       price,
       description,
-      imageUrl: `/uploads/${req.file.filename}` // Used for frontend image rendering
+      imageUrl: `/uploads/${req.file.filename}`
     });
 
     await newProduct.save();

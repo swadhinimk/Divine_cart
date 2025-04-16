@@ -4,13 +4,13 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
-const productRoutes = require('./routes/productRoutes'); // Adjust if needed
+const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ MongoDB Connection
-mongoose.connect('mongodb+srv://yeshwanthm22csd:hHNdJpIgSGDBP98O@divinecart.raw3tjl.mongodb.net/', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -19,7 +19,7 @@ mongoose.connect('mongodb+srv://yeshwanthm22csd:hHNdJpIgSGDBP98O@divinecart.raw3
 
 // ✅ Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'], // Frontend origins
+  origin: ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true,
 }));
 app.use(express.json());
