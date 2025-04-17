@@ -37,7 +37,7 @@ const Cart = () => {
             {cartItems.map((item, index) => (
               <div className="cart-item" key={`${item._id}-${index}`}>
                 <img
-                  src={`http://localhost:5000${item.imageUrl}`}
+                  src={item.imageUrl ? `http://localhost:5000${item.imageUrl}` : '/path/to/placeholder-image.jpg'}
                   alt={item.name}
                   className="cart-img"
                 />

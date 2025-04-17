@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff4b2; /* light golden */
+  background-color: #f0d6a1; /* soft yellow background */
   padding: 15px 30px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   position: sticky;
@@ -23,18 +23,18 @@
 .logo {
   font-size: 26px;
   font-weight: bold;
-  color: #b87400;
+  color: #b9874a; /* Rust color for logo */
 }
 
 /* Search Bar */
 .search-bar {
   width: 280px;
   padding: 10px 14px;
-  border: 1px solid #e1c16e;
+  border: 1px solid #d39b63; /* rust border */
   border-radius: 12px;
   outline: none;
   font-size: 14px;
-  background-color: #fffef3;
+  background-color: #f9f1e1; /* very light yellow background */
 }
 
 /* Navbar Links */
@@ -46,7 +46,7 @@
 
 .nav-link {
   text-decoration: none;
-  color: #5a3d1d;
+  color: #b9874a; /* Rust color for nav links */
   font-weight: 600;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .profile-icon {
-  color: #5a3d1d;
+  color: #b9874a; /* Rust color */
 }
 
 .profile-dropdown {
@@ -64,7 +64,7 @@
   top: 35px;
   right: 0;
   background-color: white;
-  border: 1px solid #ddd;
+  border: 1px solid #d39b63; /* subtle rust border */
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -74,13 +74,13 @@
 .profile-option {
   display: block;
   padding: 10px;
-  color: #444;
+  color: #666;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .profile-option:hover {
-  background-color: #fff6d1;
+  background-color: #f8f1e1; /* very light yellow on hover */
 }
 
 /* Filter Buttons */
@@ -93,8 +93,8 @@
 }
 
 .filters button {
-  background-color: #e1c16e;
-  color: #4a2e00;
+  background-color: #d39b63; /* rust background */
+  color: #4e2a0f; /* dark brown text */
   padding: 10px 18px;
   border: none;
   border-radius: 25px;
@@ -104,15 +104,15 @@
 }
 
 .filters button:hover {
-  background-color: #dba602;
+  background-color: #b9874a; /* darker rust on hover */
   color: white;
-  box-shadow: 0 0 10px rgba(244, 197, 66, 0.5);
+  box-shadow: 0 0 10px rgba(185, 135, 74, 0.5);
 }
 
 /* Section Title */
 .section-title {
   text-align: center;
-  color: #a86a00;
+  color: #b9874a; /* Rust color for section title */
   font-size: 26px;
   font-weight: bold;
   margin-top: 10px;
@@ -164,15 +164,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f7f7;
-  color: #999;
+  background: #f9f1e1; /* light yellow background */
+  color: #b9874a; /* Rust color */
   border-radius: 12px;
 }
 
 /* Add to Cart Button */
 .add-to-cart-btn {
   margin-top: 12px;
-  background-color: #f0a500;
+  background-color: #b9874a; /* Rust background */
   color: white;
   border: none;
   padding: 10px 16px;
@@ -183,6 +183,6 @@
 }
 
 .add-to-cart-btn:hover {
-  background-color: #d98c00;
+  background-color: #a56f3b; /* darker rust on hover */
   transform: scale(1.05);
 }

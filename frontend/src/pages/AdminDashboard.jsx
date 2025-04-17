@@ -70,6 +70,8 @@ const AdminDashboard = () => {
       alert('Product added successfully!');
       setProduct({ name: '', category: '', material: '', price: '', description: '', image: null });
       setImagePreview(null);
+      setTab('view'); // ✅ Automatically switch to View tab
+      fetchProducts(); // ✅ Refresh product list
     } catch (err) {
       console.error("Error adding product:", err.response?.data || err.message);
       alert('Error adding product.');

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import './HomePage.css';
 import axios from 'axios';
 import LoginPopup from '../components/LoginPopup';
-
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -18,18 +17,24 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Fetch products from backend
   useEffect(() => {
     axios
       .get('http://localhost:5000/api/products')
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        console.log("Fetched products:", res.data);
+        setProducts(res.data);
+      })
       .catch((err) => console.error(err));
   }, []);
 
+  // Show login popup after 20 seconds
   useEffect(() => {
     const timer = setTimeout(() => setShowLogin(true), 20000);
     return () => clearTimeout(timer);
   }, []);
 
+  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -40,11 +45,13 @@ const HomePage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Filtered products based on category
   const filteredProducts =
     filter === 'All'
       ? products
       : products.filter((product) => product.category === filter);
 
+  // Handle add to cart
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
     navigate('/cart');
@@ -54,6 +61,7 @@ const HomePage = () => {
     <div className="homepage-container">
       {showLogin && <LoginPopup onClose={() => setShowLogin(false)} />}
 
+      {/* Navbar */}
       <nav className="navbar">
         <h1 className="logo">🛕 Divine Kart</h1>
         <input type="text" placeholder="Search..." className="search-bar" />
@@ -92,6 +100,7 @@ const HomePage = () => {
         </div>
       </nav>
 
+      {/* Filter buttons */}
       <div className="filters">
         <button onClick={() => setFilter('All')}>All</button>
         <button onClick={() => setFilter('Deity Statues')}>Deity Statues</button>
@@ -101,6 +110,8 @@ const HomePage = () => {
       </div>
 
       <h2 className="section-title">Featured Products</h2>
+
+      {/* Product grid */}
       <div className="catalogue">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
